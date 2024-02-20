@@ -13,8 +13,25 @@ export class Failure<T> {
 
 export type Result<T> = Success<T>|Failure<T>
 export type Processor<Input, Output> = (input: Input) => Promise<Output>
+
+export interface WritableStream<Input> extends NodeJS.WritableStream {
+  write(input: Input): boolean
+}
+
+export interface ReadableStream<Output> extends NodeJS.ReadableStream {
+
+}
+
 export interface Transformer<Input, Output> extends Transform {
   _transform(obj: Result<Input>, encoding: BufferEncoding, cb: TransformCallback): void
+
+  pipe<T extends WritableStream<Input>>(
+    destination: T,
+    options?: {
+        end?: boolean | undefined;
+    },
+): T;
+
 }
 
 export const Ok = <T>(result: T): Result<T> => new Success<T>(result)
