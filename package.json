@@ -1,0 +1,26 @@
+{
+  "name": "@enspirit/xls-toolkit",
+  "version": "0.0.1",
+  "description": "Toolkit to help process XLS(x) files",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsup ./src",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [],
+  "author": "Louis Lambeau <louis.lambeau@enspirit.be>",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "finitio": "^1.3.7",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.202",
+    "@types/node": "^20.11.19",
+    "tsup": "^8.0.2",
+    "typescript": "^5.3.3",
+    "vitest": "^1.3.0"
+  }
+}
