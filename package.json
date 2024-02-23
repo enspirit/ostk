@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "lodash": "^4.17.21",
-    "finitio": "github:enspirit/finitio.js#migrate-to-peggyjs",
+    "finitio": "github:enspirit/finitio.js",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz"
   },
   "devDependencies": {

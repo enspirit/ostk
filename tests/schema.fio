@@ -1,8 +1,10 @@
 @import finitio/data
 
-{
+Row = {
   id: Numeric
   name: String
   country: String
   language:? String
 }
+
+Main = Row

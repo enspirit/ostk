@@ -3,7 +3,6 @@ import { readSheet } from '../src'
 import { Readable, Transform, Writable } from 'stream';
 import { describe, expect, test, beforeEach, vi } from 'vitest'
 import { waitForEnd } from './helpers';
-import { Success } from '../src/types';
 
 const devNull = new Writable({
   objectMode: true,
@@ -54,7 +53,7 @@ describe('readSheet()', () => {
       expect(process).toHaveBeenCalledTimes(4)
     });
 
-    test('produces Success<any> instances', async () => {
+    test('produces rows', async () => {
       const dripped: Array<unknown> = [];
       const consumer = new Transform({
         objectMode: true,
@@ -68,7 +67,12 @@ describe('readSheet()', () => {
 
       await waitForEnd(stream);
 
-      expect(dripped[0]).to.be.an.instanceof(Success)
+      expect(dripped[0]).to.include({
+        id: 1,
+        country: 'England',
+        language: 'en',
+        name: 'John Doe'
+      })
     });
   })
 
