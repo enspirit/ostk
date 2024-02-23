@@ -8,6 +8,7 @@
     "fio:build": "finitio -b tests/schema.fio --lang typescript > tests/schema.ts",
     "pretest": "npm run fio:build",
     "test": "vitest run",
+    "pretest:watch": "npm run fio:build",
     "test:watch": "vitest"
   },
   "keywords": [],

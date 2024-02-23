@@ -1,6 +1,7 @@
 import { describe, expect, test, beforeEach, vi } from 'vitest'
-import { transform, streamOf, ReadableObjectStream, DuplexObjectStream, WritableObjectStream } from '../../src/pipeline'
 import { Sink, useSink } from '../pipeline/helpers'
+import { streamOf, transform } from '../../src';
+import { ReadableObjectStream, DuplexObjectStream, WritableObjectStream } from '../../src/pipeline/types';
 
 describe('a simple pipeline', () => {
 
