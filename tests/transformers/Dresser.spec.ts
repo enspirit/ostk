@@ -2,8 +2,6 @@ import { Dresser } from '../../src'
 import { Readable, Transform, Writable } from 'stream';
 import { describe, expect, test, beforeEach, vi } from 'vitest'
 import Finitio, { System } from 'finitio';
-import { it } from 'node:test';
-import { Success } from '../../src/types';
 
 describe('The Dresser transformer', () => {
 
