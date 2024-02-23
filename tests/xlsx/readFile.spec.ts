@@ -1,8 +1,8 @@
 import { resolve } from 'path';
-import { readSheet } from '../src'
+import { readSheet } from '../../src'
 import { Readable, Transform, Writable } from 'stream';
 import { describe, expect, test, beforeEach, vi } from 'vitest'
-import { waitForEnd } from './helpers';
+import { waitForEnd } from '../helpers';
 
 const devNull = new Writable({
   objectMode: true,
@@ -14,17 +14,17 @@ const devNull = new Writable({
 describe('readSheet()', () => {
 
   test('throws when file not found', () => {
-    const file = resolve(__dirname, 'fixtures/wrong.xlsx');
+    const file = resolve(__dirname, '../fixtures/wrong.xlsx');
     expect(() => readSheet(file, 'Sheet1')).to.throw(/no such file/)
   })
 
   test('throws when sheet does not exist', () => {
-    const file = resolve(__dirname, 'fixtures/basic.xlsx');
+    const file = resolve(__dirname, '../fixtures/basic.xlsx');
     expect(() => readSheet(file, 'invalid')).to.throw(/Sheet not found/)
   })
 
   test('returns a stream', () => {
-    const file = resolve(__dirname, 'fixtures/basic.xlsx');
+    const file = resolve(__dirname, '../fixtures/basic.xlsx');
     expect(readSheet(file, 'Sheet1')).to.be.an.instanceof(Readable)
   })
 
@@ -32,7 +32,7 @@ describe('readSheet()', () => {
 
     let stream: Readable;
     beforeEach(() => {
-      const file = resolve(__dirname, 'fixtures/basic.xlsx');
+      const file = resolve(__dirname, '../fixtures/basic.xlsx');
       stream = readSheet(file, 'Sheet1');
     })
 
