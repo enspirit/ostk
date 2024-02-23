@@ -1,7 +1,6 @@
-import { describe, expect, test, beforeEach, vi } from 'vitest'
-import { Transformer } from '../../src'
-import { readable, transform, pipeline, pipe, streamOf, ReadableObjectStream, DuplexObjectStream } from '../../src/pipeline'
-import { Readable, Stream, Writable } from 'stream'
+import { describe, expect, test, beforeEach } from 'vitest'
+import { transform, pipe, streamOf, DuplexObjectStream } from '../../src/pipeline'
+import { Stream } from 'stream'
 import { Sink } from './helpers'
 
 describe('pipe()', () => {
@@ -31,7 +30,9 @@ describe('pipe()', () => {
     test('returns the proper resulting stream type', () => {
       const source = streamOf(1, 2, 3, 4);
       const destination = transform(async (input: number) => input.toString())
-      const stream: DuplexObjectStream<string> = pipe(source, destination);
+
+      const t = pipe(source, destination);
+      const stream: DuplexObjectStream<number, string> = pipe(source, destination);
     })
 
   })

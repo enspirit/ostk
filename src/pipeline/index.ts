@@ -1,7 +1,7 @@
 export * from './utils'
 
 import { Duplex, Readable, Stream, Transform, Writable } from "stream";
-import { FirstArg, LambdaTransformer, SimpleLambda, Transformer, TransformerInput } from "../transformers";
+import { FirstArg, LambdaTransformer, SimpleLambda, Transformer, TransformerInput, TransformerOutput } from "../transformers";
 
 export type ReadableObjectStream<T> = Omit<Readable, 'pipe'> & {
   _objectType: T
@@ -13,15 +13,16 @@ export type WritableObjectStream<T> = Writable & {
   _objectType: T
 }
 
-export type DuplexObjectStream<T> = Omit<Duplex, 'pipe'> & {
-  _objectType: T
+export type DuplexObjectStream<I, O> = Omit<Duplex, 'pipe'> & {
+  _inputObjectType: I
+  _outputObjectType: O
 
-  pipe<D extends PipeDestination<T>>(destination: D): D
+  pipe<D extends PipeDestination<O>>(destination: D): D
 }
 
-export type PipeDestination<I> = WritableObjectStream<I> | DuplexObjectStream<I>
+export type PipeDestination<I> = WritableObjectStream<I> | DuplexObjectStream<I, unknown>
 
-export const transform = <T extends SimpleLambda>(lambda: T): DuplexObjectStream<FirstArg<T>> => {
+export const transform = <T extends SimpleLambda>(lambda: T): DuplexObjectStream<FirstArg<T>, Awaited<ReturnType<T>>> => {
   return wrap(new LambdaTransformer<FirstArg<T>, Awaited<ReturnType<T>>>(lambda))
 }
 
@@ -41,16 +42,16 @@ export const writable = <T>(stream: Writable): WritableObjectStream<T> => {
   return stream as WritableObjectStream<T>
 }
 
-export const duplex = <T>(stream: Duplex): DuplexObjectStream<T> => {
+export const duplex = <I, O>(stream: Duplex): DuplexObjectStream<I, O> => {
   if (!stream.writableObjectMode) {
     throw new Error(`Non object stream detected`);
   }
 
-  return stream as DuplexObjectStream<T>
+  return stream as DuplexObjectStream<I, O>
 }
 
 export const wrap = <T extends Transformer<unknown, unknown>>
-(transformer: T): DuplexObjectStream<TransformerInput<T>> => {
+(transformer: T): DuplexObjectStream<TransformerInput<T>, TransformerOutput<T>> => {
   return duplex(
     new Transform({
       objectMode: true,

@@ -1,7 +1,5 @@
 import { describe, expect, test, beforeEach, vi } from 'vitest'
-import { Transformer } from '../../src'
-import { readable, transform, pipe, streamOf, ReadableObjectStream, DuplexObjectStream } from '../../src/pipeline'
-import { Readable, Stream, Writable } from 'stream'
+import { transform, streamOf, ReadableObjectStream, DuplexObjectStream, WritableObjectStream } from '../../src/pipeline'
 import { Sink, useSink } from '../pipeline/helpers'
 
 describe('a simple pipeline', () => {
@@ -12,15 +10,13 @@ describe('a simple pipeline', () => {
   })
 
   test('works', async () => {
-    const source = streamOf(1, 2, 3, 4);
-    const toStr = transform(async (input: number) => input.toString());
-    const toUpCase = transform(async (i: string) => i.toUpperCase() );
+    const source: ReadableObjectStream<number> = streamOf(1, 2, 3, 4);
+    const toStr: DuplexObjectStream<number, string> = transform(async (input: number) => input.toString());
+    const toUpCase: DuplexObjectStream<string, string> = transform(async (i: string) => i.toUpperCase() );
 
-    const one = source.pipe(toStr);
-
-    const two = one.pipe(toUpCase)
-
-    const three = two.pipe(sink.stream)
+    const one: DuplexObjectStream<number, string> = source.pipe(toStr);
+    const two: DuplexObjectStream<string, string> = one.pipe(toUpCase)
+    const three: WritableObjectStream<string> = two.pipe(sink.stream)
 
     await sink.wait();
 
