@@ -1,24 +1,14 @@
 import { Stream, Writable } from "stream"
-
-export const waitForEnd = async (stream: Stream) => {
-  await new Promise(resolve => {
-    stream.on('close', resolve)
-    stream.on('error', console.error)
-  })
-}
-
-export const devNull = () => new Writable({
-  objectMode: true,
-  write(chunk, enc, cb) {
-    console.log('to dev null', chunk)
-    cb(null)
-  }
-})
-
-// Custom chai assertions
 import { expect } from "vitest"
 import type { Assertion, AsymmetricMatchersContaining } from 'vitest'
-import { Failure, Success } from "../src"
+import { Failure, Success, dress } from "../src"
+import { Row, System } from "./fixtures/schema";
+
+// Utils
+
+export const RowDresser = dress<Row>(System.Main!);
+
+// Add custom chai/expect assertions
 
 interface CustomMatchers<R = unknown> {
   toBeSuccess: <T>(cb?: (result: unknown) => void) => R

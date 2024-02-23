@@ -1,5 +1,6 @@
 import { Readable, Writable } from "stream";
-import { ReadableObjectStream, WritableObjectStream, readable, writable } from "../../src/pipeline";
+import { readable, writable } from "../../src/pipeline";
+import { WritableObjectStream } from "../../src/pipeline/types";
 
 export type Sink<T> = {
   items: Array<T>,
@@ -15,7 +16,7 @@ export const useSink = <T>(): Sink<T> => {
     items = [];
   }
 
-  const stream = writable<string>(new Writable({
+  const stream = writable<T>(new Writable({
     objectMode: true,
     write(obj, enc, cb) {
       items.push(obj);
