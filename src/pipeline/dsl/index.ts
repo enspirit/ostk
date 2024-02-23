@@ -1,3 +1,4 @@
+export * from './dress';
 export * from './duplex';
 export * from './pipe';
 export * from './readable';

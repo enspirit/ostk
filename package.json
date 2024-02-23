@@ -5,7 +5,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build": "tsup ./src",
-    "fio:build": "finitio -b tests/schema.fio --lang typescript > tests/schema.ts",
+    "fio:build": "finitio -b tests/fixtures/schema.fio --lang typescript > tests/fixtures/schema.ts",
     "pretest": "npm run fio:build",
     "test": "vitest run",
     "pretest:watch": "npm run fio:build",
