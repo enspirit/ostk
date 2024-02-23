@@ -5,6 +5,8 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build": "tsup ./src",
+    "fio:build": "finitio -b tests/schema.fio --lang typescript > tests/schema.ts",
+    "pretest": "npm run fio:build",
     "test": "vitest run",
     "test:watch": "vitest"
   },
@@ -13,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "lodash": "^4.17.21",
-    "finitio": "^1.3.7",
+    "finitio": "github:enspirit/finitio.js#migrate-to-peggyjs",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz"
   },
   "devDependencies": {

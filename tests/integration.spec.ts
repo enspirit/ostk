@@ -1,22 +1,14 @@
 import { beforeEach, describe, test, expect } from "vitest";
-
-import Finitio from "finitio";
 import { Dresser, Grouper, builder, createTransformer, readSheet } from '../src'
 import { waitForEnd } from "./helpers";
 import { join } from "path";
 import { Success, Transformer } from "../src/types";
 import { Writable } from "stream";
+import { System } from './schema'
 
 describe('Integration tests', () => {
 
   type Row = { id: number, name: string, country: string }
-
-  const schema = Finitio.system(`{
-    id: .Number,
-    name: .String,
-    country: .String
-    language:? .String
-  }`);
 
   let dresser: Transformer<any, Row>;
   let toUpperCase: Transformer<Row, Row>
@@ -26,7 +18,7 @@ describe('Integration tests', () => {
 
   beforeEach(() => {
     dripped = [];
-    dresser = Dresser<Row>(schema)
+    dresser = Dresser<Row>(System)
     grouper = Grouper('country');
 
     toUpperCase = createTransformer(async (input: Row): Promise<Row> => {

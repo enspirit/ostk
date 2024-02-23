@@ -1,0 +1,8 @@
+@import finitio/data
+
+{
+  id: Numeric
+  name: String
+  country: String
+  language:? String
+}

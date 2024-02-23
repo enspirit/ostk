@@ -28,7 +28,7 @@ export interface Transformer<Input, Output> extends Transform {
   pipe<T extends WritableStream<Input>>(
     destination: T,
     options?: {
-        end?: boolean | undefined;
+      end?: boolean | undefined;
     },
 ): T;
 
