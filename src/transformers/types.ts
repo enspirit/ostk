@@ -1,3 +1,5 @@
+import type { Transformer } from "./Transformer";
+
 export class Success<T> {
   success = true;
   constructor(public result: T) {}
@@ -12,6 +14,9 @@ export type Result<T> = Success<T> | Failure<T>
 
 export type SimpleLambda = (input: any) => Promise<any>
 export type FirstArg<T extends SimpleLambda> = Parameters<T>[0]
+
+export type TransformerInput<T> = T extends Transformer<infer I, unknown> ? I : never
+export type TransformerOutput<T> = T extends Transformer<unknown, infer O> ? O : never
 
 export const Err = <T>(err: string|Error|Failure<T>): Failure<T> => {
   if (err instanceof Failure) {

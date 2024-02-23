@@ -1,6 +1,6 @@
 import { describe, expect, test, beforeEach, vi } from 'vitest'
-import { Transformer, transform } from '../../src'
-import { readable, pipeline, pipe, streamOf, ReadableObjectStream, DuplexObjectStream } from '../../src/pipeline'
+import { Transformer } from '../../src'
+import { readable, transform, pipeline, pipe, streamOf, ReadableObjectStream, DuplexObjectStream } from '../../src/pipeline'
 import { Readable, Stream, Writable } from 'stream'
 import { Sink } from './helpers'
 

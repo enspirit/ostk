@@ -1,10 +1,10 @@
 import { Readable, Writable } from "stream";
-import { ReadableObjectStream, readable } from "../../src/pipeline";
+import { ReadableObjectStream, WritableObjectStream, readable, writable } from "../../src/pipeline";
 
 export type Sink<T> = {
   items: Array<T>,
   drain(): void
-  stream: Writable,
+  stream: WritableObjectStream<T>,
   wait(): Promise<unknown>
 }
 
@@ -15,13 +15,13 @@ export const useSink = <T>(): Sink<T> => {
     items = [];
   }
 
-  const stream = new Writable({
+  const stream = writable<string>(new Writable({
     objectMode: true,
     write(obj, enc, cb) {
       items.push(obj);
       cb();
     }
-  });
+  }));
 
   const wait = () => {
     return new Promise((resolve) => {

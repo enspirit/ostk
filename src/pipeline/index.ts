@@ -1,18 +1,28 @@
 export * from './utils'
 
 import { Duplex, Readable, Stream, Transform, Writable } from "stream";
-import { Transformer } from "../transformers";
+import { FirstArg, LambdaTransformer, SimpleLambda, Transformer, TransformerInput } from "../transformers";
 
-export type ReadableObjectStream<T> = Readable & {
+export type ReadableObjectStream<T> = Omit<Readable, 'pipe'> & {
   _objectType: T
+
+  pipe<D extends PipeDestination<T>>(destination: D): D
 }
 
 export type WritableObjectStream<T> = Writable & {
   _objectType: T
 }
 
-export type DuplexObjectStream<T> = Duplex & {
+export type DuplexObjectStream<T> = Omit<Duplex, 'pipe'> & {
   _objectType: T
+
+  pipe<D extends PipeDestination<T>>(destination: D): D
+}
+
+export type PipeDestination<I> = WritableObjectStream<I> | DuplexObjectStream<I>
+
+export const transform = <T extends SimpleLambda>(lambda: T): DuplexObjectStream<FirstArg<T>> => {
+  return wrap(new LambdaTransformer<FirstArg<T>, Awaited<ReturnType<T>>>(lambda))
 }
 
 export const readable = <T>(stream: Readable): ReadableObjectStream<T> => {
@@ -40,7 +50,7 @@ export const duplex = <T>(stream: Duplex): DuplexObjectStream<T> => {
 }
 
 export const wrap = <T extends Transformer<unknown, unknown>>
-(transformer: T): DuplexObjectStream<T> => {
+(transformer: T): DuplexObjectStream<TransformerInput<T>> => {
   return duplex(
     new Transform({
       objectMode: true,
@@ -51,35 +61,18 @@ export const wrap = <T extends Transformer<unknown, unknown>>
   ))
 }
 
-type PipeDestination<I> = WritableObjectStream<I>
-  | Transformer<I, unknown>
-
-type ResultingStream<I, T extends PipeDestination<I>> =
-  T extends WritableObjectStream<I> ? WritableObjectStream<I>
-  : T extends Transformer<I, infer X> ? DuplexObjectStream<X>
-  : never
 
 export const pipe = <I, T extends PipeDestination<I>>(
   stream: ReadableObjectStream<I>,
   destination: T
-): ResultingStream<I, T> => {
+): T => {
   if (destination instanceof Transformer) {
-    return stream.pipe(wrap(destination)) as ResultingStream<I, T>;
+    return stream.pipe(
+      // @ts-ignore
+      wrap(destination)
+    ) as T
   }
 
-  return stream.pipe(destination) as ResultingStream<I, T>;
+  return stream.pipe(destination) as T;
 }
 
-export const pipeline = (
-  stream: ReadableObjectStream<any>,
-  ...transformers: Array<Transformer<unknown, unknown>>
-) => {
-  return transformers.reduce((str: Stream, tra) => {
-    return str.pipe(new Transform({
-      objectMode: true,
-      async transform(item, enc, cb) {
-        cb(null, await tra.process(item));
-      }
-    }))
-  }, stream)
-}
