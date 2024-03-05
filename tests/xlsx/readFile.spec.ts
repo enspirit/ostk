@@ -50,7 +50,7 @@ describe('readSheet()', () => {
 
       await waitForEnd(stream);
 
-      expect(process).toHaveBeenCalledTimes(4)
+      expect(process).toHaveBeenCalledTimes(5)
     });
 
     test('produces rows', async () => {

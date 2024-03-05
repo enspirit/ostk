@@ -2,11 +2,11 @@ import { Stream, Writable } from "stream"
 import { expect } from "vitest"
 import type { Assertion, AsymmetricMatchersContaining } from 'vitest'
 import { Failure, Success, dress } from "../src"
-import { Row, System } from "./fixtures/schema";
+import { Row, default as System } from "./fixtures/schema";
 
 // Utils
 
-export const RowDresser = dress<Row>(System.Main!);
+export const RowDresser = dress<Row>(System().Main);
 
 // Add custom chai/expect assertions
 
@@ -50,3 +50,11 @@ expect.extend({
     }
   }
 })
+
+// Wait for the end of a stream
+export const waitForEnd = (stream: Stream) => {
+  return new Promise((resolve, reject) => {
+    stream.on('end', resolve);
+    stream.on('error', reject);
+  })
+}
