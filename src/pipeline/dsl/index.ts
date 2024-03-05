@@ -3,6 +3,7 @@ export * from './duplex';
 export * from './excel';
 export * from './pipe';
 export * from './readable';
+export * from './rename';
 export * from './streamOf';
 export * from './transform';
 export * from './wrap';

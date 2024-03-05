@@ -3,11 +3,17 @@ import type { Transformer } from "./Transformer";
 export class Success<T> {
   success = true;
   constructor(public result: T) {}
+  unwrap(): T {
+    return this.result;
+  }
 }
 
 export class Failure<T> {
   success = false;
   constructor(public err: string) {}
+  unwrap(): T {
+    throw new Error('Cannot unwrap a Failure')
+  }
 }
 
 export type Result<T> = Success<T> | Failure<T>
