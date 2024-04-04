@@ -2,7 +2,7 @@ import { Err, Failure, Ok, Result } from "./types";
 
 export abstract class Transformer<Input, Output> {
 
-  async process(item: Result<Input>): Promise<Result<Output>> {
+  async process(item: Result<Input>): Promise<Result<Output>|Failure<any>> {
     if (item instanceof Failure) {
       return item;
     }

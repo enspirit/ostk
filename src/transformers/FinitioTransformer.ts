@@ -8,7 +8,7 @@ export class FinitioDresser<T> extends Transformer<unknown, T> {
   }
 
   async _process(item: unknown): Promise<T> {
-    return this.schema.dress<T>(item)
+    return this.schema.dress(item) as T
   }
 
 }
