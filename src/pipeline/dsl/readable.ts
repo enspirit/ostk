@@ -14,6 +14,6 @@ export const readable = <T>(stream: Readable): ReadableObjectStream<T> => {
     }
   }) as any;
 
-  return stream.pipe(wrapper) as ReadableObjectStream<T>
+  return stream.pipe(wrapper);
 }
 

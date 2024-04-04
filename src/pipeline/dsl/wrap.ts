@@ -3,8 +3,12 @@ import { Transformer, TransformerInput, TransformerOutput } from "../../transfor
 import { DuplexObjectStream } from "../types";
 import { duplex } from "./duplex";
 
-export const wrap = <T extends Transformer<unknown, unknown>>
-(transformer: T): DuplexObjectStream<TransformerInput<T>, TransformerOutput<T>> => {
+export const wrap = <
+  I,
+  O,
+  T extends Transformer<I, O>
+>
+(transformer: T): DuplexObjectStream<I, O> => {
   return duplex(
     new Transform({
       objectMode: true,

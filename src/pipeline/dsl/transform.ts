@@ -1,7 +1,10 @@
-import { SimpleLambda, FirstArg, LambdaTransformer } from "../../transformers"
+import { SimpleLambda, LambdaTransformer } from "../../transformers"
 import { DuplexObjectStream } from "../types"
 import { wrap } from "./wrap"
 
-export const transform = <T extends SimpleLambda>(lambda: T): DuplexObjectStream<FirstArg<T>, Awaited<ReturnType<T>>> => {
-  return wrap(new LambdaTransformer<FirstArg<T>, Awaited<ReturnType<T>>>(lambda))
+type LambdaInput<T> = T extends SimpleLambda<infer X, any> ? X : never
+type LambdaOutput<T> = T extends SimpleLambda<any, infer X> ? X : never
+
+export const transform = <I, O>(lambda: SimpleLambda<I, O>): DuplexObjectStream<I, O> => {
+  return wrap(new LambdaTransformer(lambda))
 }

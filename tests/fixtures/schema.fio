@@ -5,6 +5,7 @@ Row = {
   name: String
   country: String
   language:? String
+  birthdate:? Date
 }
 
 Main = Row

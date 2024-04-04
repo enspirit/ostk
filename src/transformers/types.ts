@@ -18,8 +18,7 @@ export class Failure<T> {
 
 export type Result<T> = Success<T> | Failure<T>
 
-export type SimpleLambda = (input: any) => Promise<any>
-export type FirstArg<T extends SimpleLambda> = Parameters<T>[0]
+export type SimpleLambda<I, O> = (input: I) => Promise<O>
 
 export type TransformerInput<T> = T extends Transformer<infer I, unknown> ? I : never
 export type TransformerOutput<T> = T extends Transformer<unknown, infer O> ? O : never

@@ -10,7 +10,9 @@ XLSX.set_fs(fs);
 XLSX.stream.set_readable(Readable);
 
 export const readFile = (path: string) => {
-  return xlsxReadFile(path)
+  return xlsxReadFile(path, {
+    cellDates: true
+  })
 }
 
 export const readSheet = (path: string, sheetName: string) => {

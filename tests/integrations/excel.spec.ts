@@ -1,10 +1,9 @@
 import '../helpers'
-import { describe, expect, test, beforeEach, vi } from 'vitest'
+import { describe, expect, test, beforeEach } from 'vitest'
 import { Sink, useSink } from '../pipeline/helpers'
-import { dress, excel, streamOf, transform } from '../../src';
-import { ReadableObjectStream, DuplexObjectStream, WritableObjectStream } from '../../src/pipeline/types';
+import { excel } from '../../src';
+import { ReadableObjectStream } from '../../src/pipeline/types';
 import type { Row } from '../fixtures/schema';
-import System from '../fixtures/schema';
 import { RowDresser } from '../helpers';
 import path from 'path';
 
