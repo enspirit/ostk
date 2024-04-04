@@ -29,7 +29,6 @@ describe('a pipeline using an excel sheet as a source', () => {
 
     expect(sink.items).toHaveLength(5);
 
-    console.log(sink.items)
     expect(sink.items[0]).toBeSuccess()
     expect(sink.items[1]).toBeSuccess()
     expect(sink.items[2]).toBeFailure(err => expect(err).toMatch(/Invalid Row/))

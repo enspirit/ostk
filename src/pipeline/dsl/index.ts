@@ -1,6 +1,7 @@
 export * from './dress';
 export * from './duplex';
 export * from './excel';
+export * from './group';
 export * from './pipe';
 export * from './readable';
 export * from './rename';
