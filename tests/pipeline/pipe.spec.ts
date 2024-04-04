@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeEach } from 'vitest'
-import { transform, pipe, streamOf, DuplexObjectStream } from '../../src/pipeline'
+import { transform, pipe, streamOf } from '../../src/pipeline'
 import { Stream } from 'stream'
 import { Sink } from './helpers'
 
