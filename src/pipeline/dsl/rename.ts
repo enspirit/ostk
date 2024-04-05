@@ -1,6 +1,4 @@
-import { Type } from "finitio"
-import { transform } from "./transform"
-import { FinitioDresser, Mapping, RenamerTransformer } from "../../transformers"
+import { Mapping, RenamerTransformer } from "../../transformers"
 import { wrap } from "./wrap"
 
 export const rename = <

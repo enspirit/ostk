@@ -1,5 +1,5 @@
 import { Transform } from "stream";
-import { Transformer, TransformerInput, TransformerOutput } from "../../transformers";
+import { Transformer } from "../../transformers";
 import { DuplexObjectStream } from "../types";
 import { duplex } from "./duplex";
 

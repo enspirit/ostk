@@ -1,5 +1,4 @@
 import { Type } from "finitio"
-import { transform } from "./transform"
 import { FinitioDresser } from "../../transformers"
 import { wrap } from "./wrap"
 import { DuplexObjectStream } from "../types"
