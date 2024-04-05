@@ -33,6 +33,8 @@ streamOf(...[
     constant: 42,
   };
 }))
+// Group by country (the `group` operator expects the stream to be sorted by these properties)
+.pipe(group(['country']))
 // Debug
 .pipe(transform(async (input) => {
   console.log('--->', JSON.stringify(input))

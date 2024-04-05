@@ -6,16 +6,12 @@ import { duplex } from "./duplex"
 import { Transform } from "stream"
 import { DuplexObjectStream } from "../types"
 
-export const group = <
-  T extends Record<PropertyKey, any>,
-  G extends Array<keyof T>>(
-  grouping: G
-): DuplexObjectStream<TransformerInput<T>, TransformerOutput<Array<T>>> => {
+export const group = <I>(grouping: Array<keyof I>): DuplexObjectStream<I, Array<I>> => {
 
   // We only group the successes
-  let items: Array<T> = [];
+  let items: Array<I> = [];
 
-  const matches = (item: T): boolean => {
+  const matches = (item: I): boolean => {
     return grouping.every((key) => {
       return item[key] === items[0][key];
     })
@@ -28,14 +24,14 @@ export const group = <
         this.push(Ok(items));
         cb(null)
       },
-      async transform(res: Result<T>, enc, cb) {
+      async transform(res: Result<I>, enc, cb) {
 
         if (!res.success) {
           this.push(res);
           return cb(null);
         }
 
-        const item = (res as Success<T>).result;
+        const item = (res as Success<I>).result;
 
         if (!items.length || matches(item)) {
           items.push(item);
