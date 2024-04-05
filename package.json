@@ -1,6 +1,6 @@
 {
   "name": "@enspirit/ostk",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Toolkit to help process object streams",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -10,6 +10,11 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "files": [
+    "dist/",
+    "README.md",
+    "package.json"
+  ],
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build": "tsup ./src",
