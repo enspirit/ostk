@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach, vi } from 'vitest'
 import { Err, Ok, Success, RenamerTransformer } from '../../src'
 
-describe.only('RenamerTransformer', () => {
+describe('RenamerTransformer', () => {
 
   describe('process', () => {
     test('passes Failures without touching them', () => {
@@ -23,7 +23,7 @@ describe.only('RenamerTransformer', () => {
       })
     })
 
-    test.only('does return mapped properties', async () => {
+    test('does return mapped properties', async () => {
       const mapping = {
         renamed: 'foo'
       };
