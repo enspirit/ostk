@@ -1,7 +1,7 @@
 {
-  "name": "@enspirit/xls-toolkit",
+  "name": "@enspirit/ostk",
   "version": "0.0.1",
-  "description": "Toolkit to help process XLS(x) files",
+  "description": "Toolkit to help process object streams",
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build": "tsup ./src",
