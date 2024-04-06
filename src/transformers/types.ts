@@ -1,16 +1,24 @@
 import type { Transformer } from "./Transformer";
 
 export class Success<T> {
-  success = true;
   constructor(public result: T) {}
+
+  get success() {
+    return true;
+  }
+
   unwrap(): T {
     return this.result;
   }
 }
 
 export class Failure<T> {
-  success = false;
   constructor(public err: string) {}
+
+  get success() {
+    return false;
+  }
+
   unwrap(): T {
     throw new Error('Cannot unwrap a Failure')
   }

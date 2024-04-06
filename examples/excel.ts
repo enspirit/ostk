@@ -1,5 +1,5 @@
 import path from "path";
-import { dress, excel, transform } from "../src";
+import { dress, excel, sink, transform } from "../src";
 import Finitio from "finitio";
 
 const source = excel(
@@ -47,7 +47,6 @@ source
     };
   }))
   // Debug
-  .pipe(transform(async (input) => {
-    console.log('--->', JSON.stringify(input))
-    return input;
-  }));
+  .pipe(sink(async (input: any) => {
+    console.log('sink', input);
+  }))

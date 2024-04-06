@@ -1,7 +1,4 @@
-import { group, streamOf, transform } from "../src";
-import { useSink } from "../tests/pipeline/helpers";
-
-const sink = useSink<any>().stream
+import { group, streamOf, transform, sink } from "../src";
 
 streamOf(...[
   {
@@ -36,7 +33,6 @@ streamOf(...[
 // Group by country (the `group` operator expects the stream to be sorted by these properties)
 .pipe(group(['country']))
 // Debug
-.pipe(transform(async (input) => {
-  console.log('--->', JSON.stringify(input))
-  return input;
+.pipe(sink(async (input: any) => {
+  console.log('sink --->', JSON.stringify(input))
 }))

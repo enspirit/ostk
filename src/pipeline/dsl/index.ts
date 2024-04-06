@@ -4,6 +4,7 @@ export * from './excel';
 export * from './group';
 export * from './readable';
 export * from './rename';
+export * from './sink';
 export * from './streamOf';
 export * from './transform';
 export * from './wrap';
