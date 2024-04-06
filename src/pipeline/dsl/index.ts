@@ -6,6 +6,7 @@ export * from './readable';
 export * from './rename';
 export * from './sink';
 export * from './streamOf';
+export * from './split';
 export * from './transform';
 export * from './wrap';
 export * from './writable';
