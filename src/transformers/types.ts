@@ -13,7 +13,7 @@ export class Success<T> {
 }
 
 export class Failure<T> {
-  constructor(public err: string) {}
+  constructor(public err: Error) {}
 
   get success() {
     return false;
@@ -37,10 +37,10 @@ export const Err = <T>(err: string|Error|Failure<T>): Failure<T> => {
   }
 
   if (err instanceof Error) {
-    return Err(err.message);
+    return new Failure(err);
   }
 
-  return new Failure(err);
+  return new Failure(new Error(err));
 }
 
 export const Ok = <T>(result: T|Success<T>): Success<T> => {
