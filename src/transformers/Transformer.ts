@@ -10,7 +10,7 @@ export abstract class Transformer<Input, Output> {
     try {
       return Ok(await this._process(item.result));
     } catch (err) {
-      return Err(err as Error)
+      return Err(err as Error, item.result)
     }
   }
 

@@ -6,7 +6,7 @@ describe('RenamerTransformer', () => {
   describe('process', () => {
     test('passes Failures without touching them', () => {
       let t = new RenamerTransformer({});
-      const err = Err('oops');
+      const err = Err('oops', 'input');
       expect(t.process(err)).resolves.toEqual(err)
     })
 

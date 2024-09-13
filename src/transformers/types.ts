@@ -13,7 +13,7 @@ export class Success<T> {
 }
 
 export class Failure<T> {
-  constructor(public err: Error) {}
+  constructor(public err: Error, public input: unknown) {}
 
   get success() {
     return false;
@@ -31,16 +31,16 @@ export type SimpleLambda<I, O> = (input: I) => Promise<O>
 export type TransformerInput<T> = T extends Transformer<infer I, unknown> ? I : never
 export type TransformerOutput<T> = T extends Transformer<unknown, infer O> ? O : never
 
-export const Err = <T>(err: string|Error|Failure<T>): Failure<T> => {
+export const Err = <T>(err: string|Error|Failure<T>, input: unknown): Failure<T> => {
   if (err instanceof Failure) {
     return err;
   }
 
   if (err instanceof Error) {
-    return new Failure(err);
+    return new Failure(err, input);
   }
 
-  return new Failure(new Error(err));
+  return new Failure(new Error(err), input);
 }
 
 export const Ok = <T>(result: T|Success<T>): Success<T> => {
