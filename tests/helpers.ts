@@ -6,7 +6,7 @@ import { Row, default as System } from "./fixtures/schema";
 
 // Utils
 
-export const RowDresser = dress<Row>(System().Main);
+export const RowDresser = () => dress<Row>(System().Main);
 
 // Add custom chai/expect assertions
 

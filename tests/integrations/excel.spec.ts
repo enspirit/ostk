@@ -19,7 +19,7 @@ describe('a pipeline using an excel sheet as a source', () => {
     const sink: Sink<Row> = useSink()
 
     const res = source
-      .pipe(RowDresser)
+      .pipe(RowDresser())
       .pipe(sink.stream);
 
     await sink.wait();
@@ -45,7 +45,7 @@ describe('a pipeline using an excel sheet as a source', () => {
     const sink: Sink<Row> = useSink()
 
     const res = source
-      .pipe(RowDresser)
+      .pipe(RowDresser())
       .pipe(sink.stream);
 
     await sink.wait();

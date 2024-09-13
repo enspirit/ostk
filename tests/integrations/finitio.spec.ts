@@ -22,7 +22,7 @@ describe('a pipeline using finitio\'s dresser', () => {
     );
 
     const res = source
-      .pipe(RowDresser)
+      .pipe(RowDresser())
       .pipe(sink.stream);
 
     await sink.wait();
