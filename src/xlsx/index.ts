@@ -2,6 +2,7 @@ import * as XLSX from 'xlsx';
 import { Readable } from 'stream';
 import * as fs from 'fs';
 import {
+  read as xlsxRead,
   readFile as xlsxReadFile,
   stream
 } from "xlsx";
@@ -15,8 +16,11 @@ export const readFile = (path: string) => {
   })
 }
 
-export const readSheet = (path: string, sheetName: string) => {
-  const wb = readFile(path);
+export const readSheet = (pathOrArrBuffer: string|ArrayBuffer, sheetName: string) => {
+  const wb = (pathOrArrBuffer instanceof ArrayBuffer)
+    ? xlsxRead(pathOrArrBuffer)
+    : readFile(pathOrArrBuffer);
+
   const sheet = wb.Sheets[sheetName];
 
   if (!sheet) {
