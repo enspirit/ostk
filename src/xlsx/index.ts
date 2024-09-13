@@ -10,16 +10,11 @@ import {
 XLSX.set_fs(fs);
 XLSX.stream.set_readable(Readable);
 
-export const readFile = (path: string) => {
-  return xlsxReadFile(path, {
-    cellDates: true
-  })
-}
-
 export const readSheet = (pathOrArrBuffer: string|ArrayBuffer, sheetName: string) => {
+  const options = { cellDates: true, raw: true };
   const wb = (pathOrArrBuffer instanceof ArrayBuffer)
-    ? xlsxRead(pathOrArrBuffer)
-    : readFile(pathOrArrBuffer);
+    ? xlsxRead(pathOrArrBuffer, options)
+    : xlsxReadFile(pathOrArrBuffer, options);
 
   const sheet = wb.Sheets[sheetName];
 
