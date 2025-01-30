@@ -5,14 +5,20 @@ import {
   read as xlsxRead,
   readFile as xlsxReadFile,
   stream,
-  ParsingOptions
+  ParsingOptions,
+  Sheet2JSONOpts
 } from "xlsx";
 
 XLSX.set_fs(fs);
 XLSX.stream.set_readable(Readable);
 
-export const readSheet = (pathOrArrBuffer: string|ArrayBuffer, sheetName: string, extraOptions?: ParsingOptions) => {
-  const options = { cellDates: true, raw: true, ...extraOptions };
+export type ReadSheetOptions = {
+  parsing?: ParsingOptions
+  toJson?: Sheet2JSONOpts
+}
+
+export const readSheet = (pathOrArrBuffer: string|ArrayBuffer, sheetName: string, extraOptions?: ReadSheetOptions) => {
+  const options = { cellDates: true, raw: true, ...extraOptions?.parsing };
   const wb = (pathOrArrBuffer instanceof ArrayBuffer)
     ? xlsxRead(pathOrArrBuffer, options)
     : xlsxReadFile(pathOrArrBuffer, options);
@@ -23,5 +29,5 @@ export const readSheet = (pathOrArrBuffer: string|ArrayBuffer, sheetName: string
     throw new Error(`Sheet not found: ${sheetName}`)
   }
 
-  return stream.to_json(sheet);
+  return stream.to_json(sheet, extraOptions?.toJson || {});
 }
