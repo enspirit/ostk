@@ -4,14 +4,15 @@ import * as fs from 'fs';
 import {
   read as xlsxRead,
   readFile as xlsxReadFile,
-  stream
+  stream,
+  ParsingOptions
 } from "xlsx";
 
 XLSX.set_fs(fs);
 XLSX.stream.set_readable(Readable);
 
-export const readSheet = (pathOrArrBuffer: string|ArrayBuffer, sheetName: string) => {
-  const options = { cellDates: true, raw: true };
+export const readSheet = (pathOrArrBuffer: string|ArrayBuffer, sheetName: string, extraOptions?: ParsingOptions) => {
+  const options = { cellDates: true, raw: true, ...extraOptions };
   const wb = (pathOrArrBuffer instanceof ArrayBuffer)
     ? xlsxRead(pathOrArrBuffer, options)
     : xlsxReadFile(pathOrArrBuffer, options);
