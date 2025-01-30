@@ -1,6 +1,6 @@
 {
   "name": "@enspirit/ostk",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Toolkit to help process object streams",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
